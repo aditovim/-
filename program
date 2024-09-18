@@ -1,0 +1,167 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp26
+{
+    public class Program
+    {
+        public class Book
+        {
+            // שדות פרטיים
+            private string title;
+            private string author;
+            private int year;
+            private int copiesAvailable;
+
+            // פעולה בונה (Constructor)
+            public Book(string title, string author, int year, int copiesAvailable)
+            {
+                this.title = title;
+                this.author = author;
+                this.year = year;
+                this.copiesAvailable = copiesAvailable;
+            }
+
+            // פעולות גישה (Getters)
+            public string GetTitle()
+            {
+                return this.title;
+            }
+
+            public string GetAuthor()
+            {
+                return this.author;
+            }
+
+            public int GetYear()
+            {
+                return this.year;
+            }
+
+            public int GetCopiesAvailable()
+            {
+                return this.copiesAvailable;
+            }
+
+            // פעולות קביעה (Setters)
+            public void SetTitle(string title)
+            {
+                this.title = title;
+            }
+
+            public void SetAuthor(string author)
+            {
+                this.author = author;
+            }
+
+            public void SetYear(int year)
+            {
+                this.year = year;
+            }
+
+            public void SetCopiesAvailable(int copiesAvailable)
+            {
+                this.copiesAvailable = copiesAvailable;
+            }
+
+            // פעולה שמחזירה מחרוזת עם פרטי הספר (override של ToString)
+            public override string ToString()
+            {
+                return $"Title: {this.title}, Author: {this.author}, Year: {this.year}, Available Copies: {this.copiesAvailable}";
+            }
+        }
+
+
+
+
+        public class LibraryManager
+        {
+            // מערך של ספרים
+            private Book[] books;
+
+            // פעולה בונה שיוצרת את המערך ומאפשרת למשתמש להזין את הספרים
+            public LibraryManager(int numberOfBooks)
+            {
+                books = new Book[numberOfBooks];
+
+                for (int i = 0; i < numberOfBooks; i++)
+                {
+                    Console.WriteLine($"Enter data for book {i + 1}:");
+
+                    Console.Write("name of book: ");
+                    string title = Console.ReadLine();
+
+                    Console.Write("Author's name: ");
+                    string author = Console.ReadLine();
+
+                    Console.Write("Year of issue: ");
+                    int year = int.Parse(Console.ReadLine());
+
+                    Console.Write("Several copies available: ");
+                    int copiesAvailable = int.Parse(Console.ReadLine());
+
+                    // יצירת אובייקט מסוג Book והכנסתו למערך
+                    books[i] = new Book(title, author, year, copiesAvailable);
+                }
+            }
+
+            // פעולה להדפסת כל הספרים במערך
+            public void PrintAllBooks()
+            {
+                Console.WriteLine("List of all books in the library:");
+                for (int i = 0; i < books.Length; i++)
+                {
+                    Console.WriteLine(books[i].ToString()); // שימוש ב-ToString להדפסת פרטי הספר
+                }
+            }
+
+            // פעולה לחיפוש ספרים לפי שם מחבר
+            public void SearchByAuthor(string author)
+            {
+                Console.WriteLine($"Search results for the author: {author}");
+                bool found = false;
+
+                for (int i = 0; i < books.Length; i++)
+                {
+                    if (books[i].GetAuthor() == author)
+                    {
+                        Console.WriteLine(books[i].ToString()); // שימוש ב-ToString להדפסת פרטי הספר
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    Console.WriteLine("No books were found by the requested author.");
+                }
+            }
+        }
+
+
+
+        static void Main(string[] args)
+        {
+            // שאל את המשתמש כמה ספרים להכניס
+            Console.Write("How many books do you want to enter?? ");
+            int numberOfBooks = int.Parse(Console.ReadLine());
+
+            // יצירת אובייקט של מנהל הספריה
+            LibraryManager libraryManager = new LibraryManager(numberOfBooks);
+
+            // הדפסת כל הספרים
+            libraryManager.PrintAllBooks();
+
+            // חיפוש ספרים לפי שם מחבר
+            Console.WriteLine();
+            Console.Write("Enter an author's name to search: ");
+            string author = Console.ReadLine();
+            libraryManager.SearchByAuthor(author);
+
+
+
+        }
+    }
+}
